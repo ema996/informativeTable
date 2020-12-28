@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/toastr.css" />
+    <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" href ="css/global.css" />
+    <link rel="stylesheet" href ="css/dashboard.css" />
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-sm-6">
+                    <img class="img img-fluid iw-short-logo" src="assets/images/iw-logo-short.png">
+                </div>
+                <div class="col-8 col-sm-6 text-right user-profile">
+                    <div onclick="logOut()" id="log-out">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div id="screens" class="row mt-5">
+        </div>
+    </div>
+    <div class="modal fade" id="add-new-screen-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create Screen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form onsubmit="event.preventDefault(); return false;">
+            <div class="modal-body">
+                
+                    <div class="form-group">
+                        <label for="screen-name">Screen Name</label>
+                        <input class="form-control" type="text" id="screen-name" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" onclick="createScreen()" class="btn btn-primary">Save</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

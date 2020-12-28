@@ -1,0 +1,64 @@
+.slide-widget{
+    background: #e31e1e;
+    color: #fff;
+    padding: 30px 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.owl-nav {
+    text-align: center;
+    font-size: 40px;
+}
+
+.owl-prev {
+    margin-right: 5px;
+}
+
+.owl-next {
+    margin-left: 5px;
+}
+
+.add-slide-btn {
+    float: right;
+}
+
+.iw-short-logo {
+    height: 60px;
+    width: auto;
+}
+
+#description-editor{
+    min-height: 200px;
+}
+
+.employee-image{
+    display: block;
+    max-width: 150px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.selected-slide {
+    opacity: 0.75;
+}
+
+.bg-image-wrap{
+    position: relative;
+    display: inline-block;
+}
+
+.bg-image-wrap span{
+    position: absolute;
+    top: 15px;
+    right: 0;
+    background: rgba(255,0,0,0.6);
+    width: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.3;
+    cursor: pointer;
+}

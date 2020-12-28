@@ -1,0 +1,12 @@
+.iw-short-logo {
+    height: 60px;
+    width: auto;
+}
+
+.add-screen-btn{
+    float: right;
+}
+
+.no-screens-message {
+    color: #e31e1e;
+}

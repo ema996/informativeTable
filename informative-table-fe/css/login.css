@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
+
+.login-form{
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-wrap{
+    max-width: 400px;
+    width: 100%;
+    background: #fff;
+    border-radius: 9px;
+    border-top: 10px solid #e31e1e;
+    border-bottom: 10px solid #e31e1e;
+    padding: 30px;
+}
+
+#particles-js{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #000;
+}
+
+.iw-logo {
+    width: 85%;
+    display: block;
+    margin: auto;
+}
+
+h2, label {
+    color: #e31e1e;
+}
+
+.user-box {
+    position: relative;
+}
+  
+.user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #e31e1e;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #e31e1e;
+    outline: none;
+    background-color: #fff !important;
+    font-weight: 500;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: #e31e1e !important;
+}
+
+.user-box label {
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #e31e1e;
+    pointer-events: none;
+    transition: .5s;
+    font-weight: 500;
+}
+
+.user-box input:focus ~ label, .user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #e31e1e;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.submit-btn {
+    background-color: #e31e1e;
+    color: #fff;
+    outline: none !important;
+    padding: 10px;
+    border-radius: 5px;
+    border-color: #e31e1e;
+    font-weight: 500;
+}
+
+@media (max-width: 390px) {
+    .submit-btn {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,19 @@
+header {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 5px 0;
+}
+
+.user-profile{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#log-out {
+    cursor: pointer;
+}
+
+button:focus{
+    outline: none;
+}
