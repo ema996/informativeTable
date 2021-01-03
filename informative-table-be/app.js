@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const sql = require('mssql');
 const authRouter = require('./auth/auth.router');
+const screensRouter = require('./screens/screens.router');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/api/auth', authRouter);
+app.use('/api/screens', screensRouter);
 
 module.exports = app;
 
