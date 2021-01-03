@@ -1,20 +1,30 @@
-let slides = [{
-    type: 'Custom Content',
-    id: new Date().getTime(),
-    content: {
-        title: 'New Employee',
-        image: 'assets/images/employee.jpeg',
-        description: '<h1>Welcome to Emilija Gjorgievska</h1><p><strong>Emilija Gjorgievska</strong> is our latest addition to the Microsoft Practice.</p>'
-    }
-}];
+let screen = {};
+let slides = [];
 let carousel;
 let quill;
 
 $(document).ready(function(){
-    if(slides.length) {
-        addCarouselItems();
-        initCarousel();
-    }
+
+    const queryParams = window.location.search;
+    const screenId = new URLSearchParams(queryParams).get('id');
+
+    axios({
+        method: 'get',
+        url: `http://localhost:3000/api/screens/${screenId}`
+    })
+    .then( res => {
+        screen = res.data;
+        screen.Files = [];
+        slides = JSON.parse(res.data.Content);
+        if(slides.length) {
+            addCarouselItems();
+            initCarousel();
+        }
+    })
+    .catch( err => {
+        console.log(err);
+        toastr.error(err.response.data.message);
+    });
 });
 
 function addCarouselItems(){
@@ -153,7 +163,7 @@ function generateSlideTemplate(slide) {
         <input onchange="imgChange(this, ${slide.id})" class="d-block" type="file" accept="image/x-png,image/jpeg,image/jpg" id="${slide.id}-image" />
     </div>
     <button type="button" class="btn btn-info">Preview</button>
-    <button type="button" onclick="saveSlide()" class="btn btn-primary">Save</button>`;
+    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-primary">Save</button>`;
     } else  if (slide.type === 'Number of employees') {
         let image = '';
         if(slide.content.image) {
@@ -172,7 +182,7 @@ function generateSlideTemplate(slide) {
         <input onchange="imgChange(this, ${slide.id})" class="d-block" type="file" accept="image/x-png,image/jpeg,image/jpg" id="${slide.id}-image" />
     </div>
     <button type="button" class="btn btn-info">Preview</button>
-    <button type="button" onclick="saveSlide()" class="btn btn-primary">Save</button>`;
+    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-primary">Save</button>`;
     } else  {
         let image = '';
         if(slide.content.image) {
@@ -203,7 +213,7 @@ function generateSlideTemplate(slide) {
         <input onchange="imgChange(this, ${slide.id})" class="d-block" type="file" accept="image/x-png,image/jpeg,image/jpg" id="${slide.id}-image" />
     </div>
     <button type="button" onclick="previewSlide(${slide.id})" class="btn btn-info">Preview</button>
-    <button type="button" onclick="saveSlide()" class="btn btn-primary">Save</button>`;
+    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-primary">Save</button>`;
     }
 }
 
@@ -219,8 +229,36 @@ function removeBackgroundImage(slideId) {
     document.getElementById(`${slideId}-image`).value = null;
 }
 
-function saveSlide() {
-    console.log(quill.root.innerHTML);
+function saveSlide(slideId) {
+    const slide = slides.find( s => s.id === slideId);
+    console.log(slide);
+    if(slide.type === 'Custom Content') {
+        slide.content.title = document.getElementById('title').value;
+        slide.content.description = quill.root.innerHTML;
+        if(document.getElementById(`${slideId}-image`).files.length){
+            screen.Files.push(document.getElementById(`${slideId}-image`).files[0]);
+        }
+        screen.Content = JSON.stringify(slides);
+        console.log(screen);
+    } else if(slide.type === 'Number of employees') {
+        slide.content.title = document.getElementById('title').value;
+        if(document.getElementById(`${slideId}-image`).files.length){
+            screen.Files.push(document.getElementById(`${slideId}-image`).files[0]);
+        }
+        screen.Content = JSON.stringify(slides);
+        console.log(screen);
+    } else if(slide.type === 'Projects Info') {
+        slide.content.title = document.getElementById('title').value;
+        slide.content.active = document.getElementById('active-projects').value;
+        slide.content.finished = document.getElementById('finished-projects').value;
+        slide.content.queue = document.getElementById('queue-projects').value;
+        if(document.getElementById(`${slideId}-image`).files.length){
+            screen.Files.push(document.getElementById(`${slideId}-image`).files[0]);
+        }
+        screen.Content = JSON.stringify(slides);
+        console.log(screen);
+    }
+    
 }
 
 function previewSlide(slideId){

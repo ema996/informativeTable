@@ -26,12 +26,12 @@ router.post('/', (req, res) => {
     try {
       const sqlRequest = new sql.Request();
       sqlRequest.input('ScreenName', req.body.ScreenName);
-      sqlRequest.input('DateCreated', new Date().getTime());
+      sqlRequest.input('DateCreated', new Date().getTime().toString());
       const query = `INSERT INTO Screens (ScreenName, DateCreated, Content)
       VALUES (@ScreenName, @DateCreated, '[]');
-      SELECT @@IDENTITY AS ID;`;
+      SELECT @@IDENTITY AS ScreenId;`;
       const result = await sqlRequest.query(query);
-      res.status(200).json({ScreenId: result.recordset[0].ScreenId});
+      res.status(200).json(result.recordset[0]);
     } catch (error) {
       console.log(error);
       res.status(500).json({message: 'Something bad happened. Please try again later.'});
