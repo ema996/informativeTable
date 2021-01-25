@@ -2,10 +2,30 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const sql = require('mssql');
+const path = require('path');
 const authRouter = require('./auth/auth.router');
 const screensRouter = require('./screens/screens.router');
+const locationsRouter = require('./locations/locations.router');
 
 const app = express();
+
+app.use('/images', express.static(path.join('images')));
+app.use('/public', express.static(path.join('public')));
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    next();
+});
+
+app.use(bodyParser.json({limit: '5mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
+
+app.use('/api/auth', authRouter);
+app.use('/api/screens', screensRouter);
+app.use('/api/locations', locationsRouter);
+
 
 dotenv.config();
 
@@ -18,19 +38,6 @@ const config = {
 }
 
 sql.connect(config).then(console.log('db connected')).catch( err => console.log(err));
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    next();
-});
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.use('/api/auth', authRouter);
-app.use('/api/screens', screensRouter);
 
 module.exports = app;
 
