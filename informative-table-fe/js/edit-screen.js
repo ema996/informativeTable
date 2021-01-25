@@ -4,7 +4,6 @@ let carousel;
 let quill;
 
 $(document).ready(function(){
-
     const queryParams = window.location.search;
     const screenId = new URLSearchParams(queryParams).get('id');
 
@@ -14,11 +13,16 @@ $(document).ready(function(){
     })
     .then( res => {
         screen = res.data;
-        screen.Files = [];
+        screen.ContentImages = [];
         slides = JSON.parse(res.data.Content);
         if(slides.length) {
             addCarouselItems();
             initCarousel();
+            document.getElementById("no-slides").innerHTML = "";
+            document.getElementById("slide-explanation").innerHTML = "* You can edit or delete each slide by clicking on it."
+        } else {
+            document.getElementById("no-slides").innerHTML = "You don't have any slides created yet.<br><br>Start adding slide now by clicking on the 'Add Slide' button.";
+            document.getElementById("slide-explanation").innerHTML = "";
         }
     })
     .catch( err => {
@@ -45,6 +49,7 @@ function initCarousel(){
         margin:10,
         dots: false,
         mouseDrag: false,
+        navText : ["<i class='fas fa-long-arrow-alt-left'></i> Previous","Next <i class='fas fa-long-arrow-alt-right'></i>"],
         responsiveClass:true,
         responsive:{
             0:{
@@ -100,6 +105,14 @@ function addNewSlide() {
             }
         }
         slides.push(slide);
+    }
+
+    if(slides.length) {
+        document.getElementById("no-slides").innerHTML = "";
+        document.getElementById("slide-explanation").innerHTML = "* You can edit or delete each slide by clicking on it."
+    } else {
+        document.getElementById("no-slides").innerHTML = "You don't have any slides created yet.<br><br>Start adding slide now by clicking on the 'Add Slide' button.";
+        document.getElementById("slide-explanation").innerHTML = "";
     }
     
     if(carousel) {
@@ -162,8 +175,8 @@ function generateSlideTemplate(slide) {
         </div>
         <input onchange="imgChange(this, ${slide.id})" class="d-block" type="file" accept="image/x-png,image/jpeg,image/jpg" id="${slide.id}-image" />
     </div>
-    <button type="button" class="btn btn-info">Preview</button>
-    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-primary">Save</button>`;
+    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-secondary">Save</button>
+    <button type="button" onclick="deleteSlide(${slide.id})" class="btn btn-danger">Delete</button>`;
     } else  if (slide.type === 'Number of employees') {
         let image = '';
         if(slide.content.image) {
@@ -181,8 +194,8 @@ function generateSlideTemplate(slide) {
         </div>
         <input onchange="imgChange(this, ${slide.id})" class="d-block" type="file" accept="image/x-png,image/jpeg,image/jpg" id="${slide.id}-image" />
     </div>
-    <button type="button" class="btn btn-info">Preview</button>
-    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-primary">Save</button>`;
+    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-secondary">Save</button>
+    <button type="button" onclick="deleteSlide(${slide.id})" class="btn btn-danger">Delete</button>`;
     } else  {
         let image = '';
         if(slide.content.image) {
@@ -212,8 +225,8 @@ function generateSlideTemplate(slide) {
         </div>
         <input onchange="imgChange(this, ${slide.id})" class="d-block" type="file" accept="image/x-png,image/jpeg,image/jpg" id="${slide.id}-image" />
     </div>
-    <button type="button" onclick="previewSlide(${slide.id})" class="btn btn-info">Preview</button>
-    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-primary">Save</button>`;
+    <button type="button" onclick="saveSlide(${slide.id})" class="btn btn-secondary">Save</button>
+    <button type="button" onclick="deleteSlide(${slide.id})" class="btn btn-danger">Delete</button>`;
     }
 }
 
@@ -231,37 +244,129 @@ function removeBackgroundImage(slideId) {
 
 function saveSlide(slideId) {
     const slide = slides.find( s => s.id === slideId);
-    console.log(slide);
     if(slide.type === 'Custom Content') {
         slide.content.title = document.getElementById('title').value;
         slide.content.description = quill.root.innerHTML;
         if(document.getElementById(`${slideId}-image`).files.length){
-            screen.Files.push(document.getElementById(`${slideId}-image`).files[0]);
+            screen.BackgroundImage = document.getElementById(`${slideId}-image`).files[0];
         }
         screen.Content = JSON.stringify(slides);
-        console.log(screen);
+        console.log(slide.content.image);
+        let fd = new FormData();
+        fd.append('BackgroundImage', screen.BackgroundImage);
+        fd.append('SlideId', slideId);
+        fd.append('Content', screen.Content);
+        fd.append('ScreenName', screen.ScreenName);
+        fd.append('ScreenId', screen.ScreenId);
+        axios({
+            method: 'put',
+            url: `http://localhost:3000/api/screens`,
+            data: fd,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then( res => {
+            toastr.success('Slide has been successfully updated.');
+            setTimeout(() => window.location.reload(), 1000);
+        })
+        .catch( err => {
+            console.log(err);
+            toastr.error(err.response.data.message);
+        });
     } else if(slide.type === 'Number of employees') {
         slide.content.title = document.getElementById('title').value;
         if(document.getElementById(`${slideId}-image`).files.length){
-            screen.Files.push(document.getElementById(`${slideId}-image`).files[0]);
+            screen.BackgroundImage = document.getElementById(`${slideId}-image`).files[0];
         }
         screen.Content = JSON.stringify(slides);
         console.log(screen);
+        let fd = new FormData();
+        fd.append('BackgroundImage', screen.BackgroundImage);
+        fd.append('SlideId', slideId);
+        fd.append('Content', screen.Content);
+        fd.append('ScreenName', screen.ScreenName);
+        fd.append('ScreenId', screen.ScreenId);
+        axios({
+            method: 'put',
+            url: `http://localhost:3000/api/screens`,
+            data: fd,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then( res => {
+            toastr.success('Slide has been successfully updated.');
+            setTimeout(() => window.location.reload(), 1000);
+        })
+        .catch( err => {
+            console.log(err);
+            toastr.error(err.response.data.message);
+        });
     } else if(slide.type === 'Projects Info') {
         slide.content.title = document.getElementById('title').value;
         slide.content.active = document.getElementById('active-projects').value;
         slide.content.finished = document.getElementById('finished-projects').value;
         slide.content.queue = document.getElementById('queue-projects').value;
         if(document.getElementById(`${slideId}-image`).files.length){
-            screen.Files.push(document.getElementById(`${slideId}-image`).files[0]);
+            screen.BackgroundImage = document.getElementById(`${slideId}-image`).files[0];
         }
         screen.Content = JSON.stringify(slides);
         console.log(screen);
+        let fd = new FormData();
+        fd.append('BackgroundImage', screen.BackgroundImage);
+        fd.append('SlideId', slideId);
+        fd.append('Content', screen.Content);
+        fd.append('ScreenName', screen.ScreenName);
+        fd.append('ScreenId', screen.ScreenId);
+        axios({
+            method: 'put',
+            url: `http://localhost:3000/api/screens`,
+            data: fd,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then( res => {
+            toastr.success('Slide has been successfully updated.');
+            setTimeout(() => window.location.reload(), 1000);
+        })
+        .catch( err => {
+            console.log(err);
+            toastr.error(err.response.data.message);
+        });
     }
     
 }
 
-function previewSlide(slideId){
-    const slide = slides.find( s => s.id === slideId);
-    
+function deleteSlide(slideId) {
+    if(confirm('Are you sure you want to remove the slide?')) {
+        const index = slides.findIndex(e => e.id === slideId);
+        if(index > -1) {
+            slides.splice(index, 1);
+        }
+        screen.Content = JSON.stringify(slides);
+        let fd = new FormData();
+        fd.append('BackgroundImage', null);
+        fd.append('SlideId', slideId);
+        fd.append('Content', screen.Content);
+        fd.append('ScreenName', screen.ScreenName);
+        fd.append('ScreenId', screen.ScreenId);
+        axios({
+            method: 'put',
+            url: `http://localhost:3000/api/screens`,
+            data: fd,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then( res => {
+            toastr.success('Slide has been successfully updated.');
+            setTimeout(() => window.location.reload(), 1000);
+        })
+        .catch( err => {
+            console.log(err);
+            toastr.error(err.response.data.message);
+        });
+    }
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/toastr.css" />
+    <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/locations.css" />
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/locations.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-sm-6">
+                    <a href="dashboard.html">
+                        <img class="img img-fluid iw-short-logo" src="assets/images/iw-logo-short.png">
+                    </a>
+                </div>
+                <div class="col-8 col-sm-6 text-right user-profile">
+                    <div>
+                        <a href="locations.html" class="locations"><i class="fas fa-map-marker-alt"></i> Locations</a>
+                    </div>
+                    <div onclick="logOut()" id="log-out">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <form onsubmit="event.preventDefault(); return false;">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Screen</th>
+                                    <th scope="col" class="text-right">
+                                        <button class="btn btn-secondary" data-toggle="modal" data-target="#add-new-location-modal"
+                                        data-backdrop="static" data-keyboard="false">
+                                        <i class="fas fa-plus-circle"></i> Add New Location</button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="locations-content">
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="add-new-location-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Location</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form onsubmit="event.preventDefault(); return false;">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="location-name">Location Name</label>
+                        <input class="form-control" type="text" id="location-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location-details">Location Details</label>
+                        <input class="form-control" type="text" id="location-details" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="screen-select">Select Screen</label>
+                        <select id="screen-select" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" onclick="createLocation()" class="btn btn-secondary">Save</button>
+                    <button type="button" onclick="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

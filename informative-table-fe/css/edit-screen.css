@@ -1,15 +1,24 @@
+.no-js .owl-carousel, .owl-carousel.owl-loaded {
+    margin-top: 20px;
+    clear: both;
+}
+
 .slide-widget{
-    background: #e31e1e;
-    color: #fff;
-    padding: 30px 10px;
+    background: #fff;
+    color: gray;
+    border: 3px solid lightgray;
+    border-left: 6px solid lightgray;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+    padding: 40px 10px;
     text-align: center;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .owl-nav {
-    text-align: center;
-    font-size: 40px;
+    margin-top: 10px;
+    font-size: 17px;
 }
 
 .owl-prev {
@@ -18,10 +27,19 @@
 
 .owl-next {
     margin-left: 5px;
+    float: right;
 }
 
 .add-slide-btn {
     float: right;
+}
+
+label {
+    font-size: 17px;
+}
+
+.explanation {
+    font-size: 12px;
 }
 
 .iw-short-logo {
@@ -41,7 +59,11 @@
 }
 
 .selected-slide {
-    opacity: 0.75;
+    color: #e31e1e;
+    border: 3px solid #e31e1e;
+    border-left: 6px solid #e31e1e;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
 .bg-image-wrap{
@@ -61,4 +83,8 @@
     font-weight: bold;
     line-height: 1.3;
     cursor: pointer;
+}
+
+.no-slides-message {
+    color: #e31e1e;
 }

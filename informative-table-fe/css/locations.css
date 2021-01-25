@@ -1,0 +1,7 @@
+tbody a {
+    color: red !important;
+}
+
+tbody a:hover {
+    text-decoration: underline !important;
+}

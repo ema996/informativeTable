@@ -32,6 +32,9 @@
                     </a>
                 </div>
                 <div class="col-8 col-sm-6 text-right user-profile">
+                    <div>
+                        <a href="locations.html" class="locations"><i class="fas fa-map-marker-alt"></i> Locations</a>
+                    </div>
                     <div onclick="logOut()" id="log-out">
                         <i class="fas fa-sign-out-alt"></i> Log Out
                     </div>
@@ -42,11 +45,15 @@
     <div class="container">
         <div class="row mt-4">
             <div class="col-12">
-                <h2>Slides:
-                    <button data-toggle="modal" data-target="#add-new-slide-modal" class="btn btn-success add-slide-btn">Add Slide</button>
+                <h2 class="title">Slides:
+                    <button data-toggle="modal" data-target="#add-new-slide-modal" data-backdrop="static" data-keyboard="false"
+                    class="btn btn-secondary add-slide-btn">
+                    <i class="fas fa-plus-circle"></i> Add Slide</button>
                 </h2>
+                <h5 id="no-slides" class="mt-5 text-center no-slides-message"></h5>
                 <div id="slides-carousel" class="owl-carousel">
                 </div>
+                <p id="slide-explanation" class="explanation mt-2"></p>
             </div>
         </div>
         <div class="row mt-5 mb-4">
@@ -78,8 +85,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="addNewSlide()" class="btn btn-primary">Save changes</button>
+                    <button type="button" onclick="addNewSlide()" class="btn btn-secondary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

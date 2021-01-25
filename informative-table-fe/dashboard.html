@@ -24,6 +24,9 @@
                     <img class="img img-fluid iw-short-logo" src="assets/images/iw-logo-short.png">
                 </div>
                 <div class="col-8 col-sm-6 text-right user-profile">
+                    <div>
+                        <a href="locations.html" class="locations"><i class="fas fa-map-marker-alt"></i> Locations</a>
+                    </div>
                     <div onclick="logOut()" id="log-out">
                         <i class="fas fa-sign-out-alt"></i> Log Out
                     </div>
@@ -53,8 +56,8 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" onclick="createScreen()" class="btn btn-primary">Save</button>
+                    <button type="submit" onclick="createScreen()" class="btn btn-secondary">Save</button>
+                    <button type="button" onclick="closeModal()" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
                 </form>
             </div>
