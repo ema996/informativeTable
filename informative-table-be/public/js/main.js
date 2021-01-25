@@ -79,7 +79,7 @@ function generateSlideContent(slide) {
     if (slide.type === 'Custom Content') {
         content = `<div class="ql-editor ql-snow">${slide.content.description}</div>`
     } else if(slide.type === 'Number of employees') {
-        content = `<div class="number-of-employees"><h1 class="text-center text-danger mt-5">MORE THAN 7 PEOPLE CURRENTLY AT BITOLA OFFICE<h1></div>`
+        content = `<div class="number-of-employees"><h1 class="text-center text-danger mt-5">MORE THAN 7 PEOPLE <br/> <br/> CURRENTLY AT OFFICE<h1></div>`
     } else if(slide.type === 'Projects Info') {
         content = `
         <div class="row projects-info-cards-row w-100 mt-5">

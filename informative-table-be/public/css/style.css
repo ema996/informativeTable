@@ -51,3 +51,16 @@ body {
     height: 200px;
     width: auto;
 }
+
+.number-of-employees{
+    display: flex;
+    height: 100%;
+    flex-flow: column;
+    justify-content: center;
+    background: url("../../images/employees-background.jpg") no-repeat top left fixed;
+	background-size: cover;
+}
+
+.number-of-employees h1 {
+    font-weight: bold;
+}
