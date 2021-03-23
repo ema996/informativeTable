@@ -140,11 +140,11 @@ function configureSlide(e) {
                     displaySize: true // default false
                 },
                 toolbar: [
-                  [{ header: [1, 2, 3, 4, false] }],
+                  [{ header: [1, 2, 3, 4, 5, false] }],
                   ['bold', 'italic', 'underline', { 'align': [] }],
                   [{ 'color': [] }, { 'background': [] }],
                   [{ list: 'ordered' }, { list: 'bullet' }],
-                  ['image','code-block']
+                  ['image']
                 ]
             },
             placeholder: 'Enter description...',
@@ -251,24 +251,36 @@ function saveSlide(slideId) {
             screen.BackgroundImage = document.getElementById(`${slideId}-image`).files[0];
         }
         screen.Content = JSON.stringify(slides);
-        console.log(slide.content.image);
-        let fd = new FormData();
-        fd.append('BackgroundImage', screen.BackgroundImage);
-        fd.append('SlideId', slideId);
-        fd.append('Content', screen.Content);
-        fd.append('ScreenName', screen.ScreenName);
-        fd.append('ScreenId', screen.ScreenId);
+        let body = {
+            Content: screen.Content,
+            ScreenId: screen.ScreenId
+        }
         axios({
             method: 'put',
             url: `http://localhost:3000/api/screens`,
-            data: fd,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            data: body,
         })
         .then( res => {
-            toastr.success('Slide has been successfully updated.');
-            setTimeout(() => window.location.reload(), 1000);
+            let fd = new FormData();
+            fd.append('BackgroundImage', screen.BackgroundImage);
+            fd.append('SlideId', slideId);
+            fd.append('ScreenId', screen.ScreenId);
+            axios({
+                method: 'post',
+                url: `http://localhost:3000/api/screens/background-image`,
+                data: fd,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then( res => {
+                toastr.success('Slide has been successfully updated.');
+                // setTimeout(() => window.location.reload(), 1000);
+            })
+            .catch( err => {
+                console.log(err);
+                toastr.error(err.response.data.message);
+            });
         })
         .catch( err => {
             console.log(err);
@@ -281,23 +293,36 @@ function saveSlide(slideId) {
         }
         screen.Content = JSON.stringify(slides);
         console.log(screen);
-        let fd = new FormData();
-        fd.append('BackgroundImage', screen.BackgroundImage);
-        fd.append('SlideId', slideId);
-        fd.append('Content', screen.Content);
-        fd.append('ScreenName', screen.ScreenName);
-        fd.append('ScreenId', screen.ScreenId);
+        let body = {
+            Content: screen.Content,
+            ScreenId: screen.ScreenId
+        }
         axios({
             method: 'put',
             url: `http://localhost:3000/api/screens`,
-            data: fd,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            data: body
         })
         .then( res => {
-            toastr.success('Slide has been successfully updated.');
-            setTimeout(() => window.location.reload(), 1000);
+            let fd = new FormData();
+            fd.append('BackgroundImage', screen.BackgroundImage);
+            fd.append('SlideId', slideId);
+            fd.append('ScreenId', screen.ScreenId);
+            axios({
+                method: 'post',
+                url: `http://localhost:3000/api/screens/background-image`,
+                data: fd,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then( res => {
+                toastr.success('Slide has been successfully updated.');
+                setTimeout(() => window.location.reload(), 1000);
+            })
+            .catch( err => {
+                console.log(err);
+                toastr.error(err.response.data.message);
+            });
         })
         .catch( err => {
             console.log(err);
@@ -313,23 +338,36 @@ function saveSlide(slideId) {
         }
         screen.Content = JSON.stringify(slides);
         console.log(screen);
-        let fd = new FormData();
-        fd.append('BackgroundImage', screen.BackgroundImage);
-        fd.append('SlideId', slideId);
-        fd.append('Content', screen.Content);
-        fd.append('ScreenName', screen.ScreenName);
-        fd.append('ScreenId', screen.ScreenId);
+        let body = {
+            Content: screen.Content,
+            ScreenId: screen.ScreenId
+        }
         axios({
             method: 'put',
             url: `http://localhost:3000/api/screens`,
-            data: fd,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            data: body
         })
         .then( res => {
-            toastr.success('Slide has been successfully updated.');
-            setTimeout(() => window.location.reload(), 1000);
+            let fd = new FormData();
+            fd.append('BackgroundImage', screen.BackgroundImage);
+            fd.append('SlideId', slideId);
+            fd.append('ScreenId', screen.ScreenId);
+            axios({
+                method: 'post',
+                url: `http://localhost:3000/api/screens/background-image`,
+                data: fd,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then( res => {
+                toastr.success('Slide has been successfully updated.');
+                setTimeout(() => window.location.reload(), 1000);
+            })
+            .catch( err => {
+                console.log(err);
+                toastr.error(err.response.data.message);
+            });
         })
         .catch( err => {
             console.log(err);
@@ -346,19 +384,14 @@ function deleteSlide(slideId) {
             slides.splice(index, 1);
         }
         screen.Content = JSON.stringify(slides);
-        let fd = new FormData();
-        fd.append('BackgroundImage', null);
-        fd.append('SlideId', slideId);
-        fd.append('Content', screen.Content);
-        fd.append('ScreenName', screen.ScreenName);
-        fd.append('ScreenId', screen.ScreenId);
+        let body = {
+            Content: screen.Content,
+            ScreenId: screen.ScreenId
+        }
         axios({
             method: 'put',
             url: `http://localhost:3000/api/screens`,
-            data: fd,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            data: body
         })
         .then( res => {
             toastr.success('Slide has been successfully updated.');
